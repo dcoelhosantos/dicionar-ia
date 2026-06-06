@@ -1,5 +1,5 @@
 import unittest
-from game.feedback import LetterFeedback, evaluate_guess, is_correct_guess, validate_word
+from game.feedback import LetterFeedback, evaluate_guess, guess_is_correct, validate_word
 
 C = LetterFeedback.CORRECT
 P = LetterFeedback.PRESENT
@@ -10,12 +10,12 @@ class FeedbackTestCase(unittest.TestCase):
     def test_marks_all_letters_correct(self):
         feedback = evaluate_guess("TERMO", "TERMO")
         self.assertEqual(feedback, (C, C, C, C, C))
-        self.assertTrue(is_correct_guess(feedback))
+        self.assertTrue(guess_is_correct(feedback))
 
     def test_marks_present_letters_in_wrong_positions(self):
         feedback = evaluate_guess("TERMO", "OMTRE")
         self.assertEqual(feedback, (P, P, P, P, P))
-        self.assertFalse(is_correct_guess(feedback))
+        self.assertFalse(guess_is_correct(feedback))
 
     def test_marks_wrong_letters(self):
         feedback = evaluate_guess("TERMO", "SALAS")
