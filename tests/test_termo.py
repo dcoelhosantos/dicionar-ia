@@ -26,10 +26,15 @@ class LoadWordsTestCase(unittest.TestCase):
 
 class TermoGameTestCase(unittest.TestCase):
     def setUp(self):
-        self.words = ("TERMO", "CARTA", "FESTA", "LIMAO", "NUVEM", "PULAR")
+        load_words_patcher = patch(
+            "game.termo.load_words",
+            return_value=("TERMO",),
+        )
+        self.load_words_mock = load_words_patcher.start()
+        self.addCleanup(load_words_patcher.stop)
 
     def test_starts_with_empty_state_without_exposing_answer(self):
-        game = TermoGame.create_random(("TERMO",))
+        game = TermoGame()
 
         self.assertEqual(
             game.state,
@@ -44,7 +49,7 @@ class TermoGameTestCase(unittest.TestCase):
         self.assertFalse(hasattr(game.state, "answer"))
 
     def test_records_and_normalizes_valid_guess(self):
-        game = TermoGame.create_random(("TERMO",))
+        game = TermoGame()
 
         result = game.make_guess("órgão")
 
@@ -54,7 +59,7 @@ class TermoGameTestCase(unittest.TestCase):
         self.assertEqual(game.state.attempts_remaining, 5)
 
     def test_repeated_guess_does_not_consume_attempt(self):
-        game = TermoGame.create_random(("TERMO",))
+        game = TermoGame()
         game.make_guess("casas")
 
         with self.assertRaisesRegex(ValueError, "já foi utilizada"):
@@ -64,7 +69,7 @@ class TermoGameTestCase(unittest.TestCase):
         self.assertEqual(game.state.attempts_remaining, 5)
 
     def test_correct_guess_wins_and_ends_game(self):
-        game = TermoGame.create_random(("TERMO",))
+        game = TermoGame()
 
         result = game.make_guess("termo")
 
@@ -74,7 +79,7 @@ class TermoGameTestCase(unittest.TestCase):
         self.assertTrue(game.state.over)
 
     def test_game_ends_after_max_attempts(self):
-        game = TermoGame.create_random(("TERMO",))
+        game = TermoGame()
         game._max_attempts = 2
 
         game.make_guess("CASAS")
@@ -86,27 +91,21 @@ class TermoGameTestCase(unittest.TestCase):
         self.assertEqual(game.state.attempts_remaining, 0)
 
     def test_rejects_guess_after_game_ends(self):
-        game = TermoGame.create_random(("TERMO",))
+        game = TermoGame()
         game._max_attempts = 1
         game.make_guess("CASAS")
 
         with self.assertRaisesRegex(RuntimeError, "já foi encerrada"):
             game.make_guess("TERMO")
 
-    def test_creates_random_game(self):
-        game = TermoGame.create_random(("TERMO",))
+    @patch("game.termo.random.choice", return_value="TERMO")
+    def test_creates_game_with_random_answer(self, random_choice_mock):
+        game = TermoGame()
 
         result = game.make_guess("TERMO")
 
-        self.assertTrue(all(item == C for item in result.feedback))
-
-    @patch("game.termo.load_words", return_value=("TERMO",))
-    def test_creates_random_game_with_default_dataset(self, load_words_mock):
-        game = TermoGame.create_random()
-
-        result = game.make_guess("TERMO")
-
-        load_words_mock.assert_called_once_with()
+        self.load_words_mock.assert_called_once_with()
+        random_choice_mock.assert_called_once_with(("TERMO",))
         self.assertTrue(all(item == C for item in result.feedback))
 
 
