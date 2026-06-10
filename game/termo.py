@@ -51,7 +51,7 @@ class TermoGame:
     ) -> None:
         self._answer = answer
         self._max_attempts = MAX_ATTEMPTS
-        self._history: list[GuessResult] = []
+        self._history = []
         self._won = False
 
     @classmethod
