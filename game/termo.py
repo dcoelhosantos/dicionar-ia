@@ -1,4 +1,3 @@
-from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 import random
@@ -45,27 +44,13 @@ def load_words(path: str | Path = DEFAULT_WORDS_PATH) -> tuple[str, ...]:
 
 
 class TermoGame:
-    def __init__(
-        self,
-        answer: str,
-    ) -> None:
-        self._answer = answer
+    def __init__(self) -> None:
+        words = load_words()
+
+        self._answer = random.choice(words)
         self._max_attempts = MAX_ATTEMPTS
         self._history = []
         self._won = False
-
-    @classmethod
-    def create_random(
-        cls,
-        words: Iterable[str] | None = None,
-    ) -> "TermoGame":
-        if words is None:
-            all_words = load_words()
-        else:
-            all_words = tuple(words)
-
-        answer = random.choice(all_words)
-        return cls(answer)
 
     @property
     def state(self) -> GameState:
