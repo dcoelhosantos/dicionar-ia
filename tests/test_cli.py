@@ -126,7 +126,7 @@ class TermoCliTests(unittest.TestCase):
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         play_mock.assert_not_called()
-        self.assertIn("Até a próxima!", console.export_text())
+        self.assertIn("Jogo finalizado!", console.export_text())
 
     def test_opcao_invalida_solicita_nova_escolha(self) -> None:
         console = make_console()
