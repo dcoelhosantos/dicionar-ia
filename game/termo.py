@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 import random
+
 from game.feedback import (
     LetterFeedback,
     evaluate_guess,
@@ -13,6 +14,7 @@ DEFAULT_WORDS_PATH = (
 )
 
 MAX_ATTEMPTS = 6
+
 
 @dataclass(frozen=True, slots=True)
 class GuessResult:
@@ -74,6 +76,15 @@ class TermoGame:
             lost=lost,
             over=over,
         )
+
+    @property
+    def answer(self) -> str:
+        if not self.state.over:
+            raise RuntimeError(
+                "A resposta só pode ser revelada após o fim da partida."
+            )
+
+        return self._answer
 
     def make_guess(self, guess: str) -> GuessResult:
         if self.state.over:
