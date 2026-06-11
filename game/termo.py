@@ -81,10 +81,6 @@ class TermoGame:
 
         normalized_guess = validate_word(guess)
 
-        for previous_result in self._history:
-            if previous_result.guess == normalized_guess:
-                raise ValueError("Essa palavra já foi utilizada anteriormente.")
-
         feedback = evaluate_guess(self._answer, normalized_guess)
         result = GuessResult(guess=normalized_guess, feedback=feedback)
 
