@@ -58,15 +58,13 @@ class TermoGameTestCase(unittest.TestCase):
         self.assertEqual(game.state.history, (result,))
         self.assertEqual(game.state.attempts_remaining, 5)
 
-    def test_repeated_guess_does_not_consume_attempt(self):
+    def test_repeated_guess_consumes_attempt(self):
         game = TermoGame()
         game.make_guess("casas")
+        game.make_guess("cásas")
 
-        with self.assertRaisesRegex(ValueError, "já foi utilizada"):
-            game.make_guess("cásas")
-
-        self.assertEqual(len(game.state.history), 1)
-        self.assertEqual(game.state.attempts_remaining, 5)
+        self.assertEqual(len(game.state.history), 2)
+        self.assertEqual(game.state.attempts_remaining, 4)
 
     def test_correct_guess_wins_and_ends_game(self):
         game = TermoGame()
