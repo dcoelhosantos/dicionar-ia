@@ -24,6 +24,7 @@ class LoadWordsTestCase(unittest.TestCase):
 
         self.assertEqual(words, ("TERMO", "ORGAO", "TERMO"))
 
+
 class TermoGameTestCase(unittest.TestCase):
     def setUp(self):
         load_words_patcher = patch(
@@ -95,6 +96,18 @@ class TermoGameTestCase(unittest.TestCase):
 
         with self.assertRaisesRegex(RuntimeError, "já foi encerrada"):
             game.make_guess("TERMO")
+
+    def test_hides_answer_during_game(self):
+        game = TermoGame()
+
+        with self.assertRaisesRegex(RuntimeError, "após o fim"):
+            _ = game.answer
+
+    def test_reveals_answer_after_game_ends(self):
+        game = TermoGame()
+        game.make_guess("TERMO")
+
+        self.assertEqual(game.answer, "TERMO")
 
     @patch("game.termo.random.choice", return_value="TERMO")
     def test_creates_game_with_random_answer(self, random_choice_mock):
