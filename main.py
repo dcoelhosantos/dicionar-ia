@@ -1,14 +1,7 @@
-import random
 from pathlib import Path
 from game.termo import GameState, load_words
 from metrics.evaluator import Evaluator
-
-class RandomEngine:
-    def make_guess(self, state: GameState, vocabulary: tuple[str, ...]) -> str:
-        history_words = {result.guess for result in state.history}
-        options = [word for word in vocabulary if word not in history_words]
-
-        return random.choice(options)
+from engines.minimax_engine import MinimaxEngine
 
 def main() -> None:
     print("Iniciando...\n")
@@ -18,7 +11,7 @@ def main() -> None:
 
     print(f"Vocabulário carregado com sucesso: {len(vocabulary)} palavras.")
 
-    engine = RandomEngine()
+    engine = MinimaxEngine()
     evaluator = Evaluator(engine=engine, vocabulary=vocabulary, num_games=50)
 
     print(f"Avaliando motor [{engine.__class__.__name__}] em {evaluator._num_games} partidas...\n")
