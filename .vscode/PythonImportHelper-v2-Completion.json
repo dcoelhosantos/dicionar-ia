@@ -1,0 +1,581 @@
+[
+    {
+        "label": "And",
+        "importPath": "sympy",
+        "description": "sympy",
+        "isExtraImport": true,
+        "detail": "sympy",
+        "documentation": {}
+    },
+    {
+        "label": "Not",
+        "importPath": "sympy",
+        "description": "sympy",
+        "isExtraImport": true,
+        "detail": "sympy",
+        "documentation": {}
+    },
+    {
+        "label": "Or",
+        "importPath": "sympy",
+        "description": "sympy",
+        "isExtraImport": true,
+        "detail": "sympy",
+        "documentation": {}
+    },
+    {
+        "label": "Not",
+        "importPath": "sympy",
+        "description": "sympy",
+        "isExtraImport": true,
+        "detail": "sympy",
+        "documentation": {}
+    },
+    {
+        "label": "Not",
+        "importPath": "sympy",
+        "description": "sympy",
+        "isExtraImport": true,
+        "detail": "sympy",
+        "documentation": {}
+    },
+    {
+        "label": "Or",
+        "importPath": "sympy",
+        "description": "sympy",
+        "isExtraImport": true,
+        "detail": "sympy",
+        "documentation": {}
+    },
+    {
+        "label": "symbols",
+        "importPath": "sympy",
+        "description": "sympy",
+        "isExtraImport": true,
+        "detail": "sympy",
+        "documentation": {}
+    },
+    {
+        "label": "to_cnf",
+        "importPath": "sympy.logic.inference",
+        "description": "sympy.logic.inference",
+        "isExtraImport": true,
+        "detail": "sympy.logic.inference",
+        "documentation": {}
+    },
+    {
+        "label": "get_symbol",
+        "importPath": "engines.dpll_solver.cnf_utils",
+        "description": "engines.dpll_solver.cnf_utils",
+        "isExtraImport": true,
+        "detail": "engines.dpll_solver.cnf_utils",
+        "documentation": {}
+    },
+    {
+        "label": "negate_literal",
+        "importPath": "engines.dpll_solver.cnf_utils",
+        "description": "engines.dpll_solver.cnf_utils",
+        "isExtraImport": true,
+        "detail": "engines.dpll_solver.cnf_utils",
+        "documentation": {}
+    },
+    {
+        "label": "to_cnf_clauses",
+        "importPath": "engines.dpll_solver.cnf_utils",
+        "description": "engines.dpll_solver.cnf_utils",
+        "isExtraImport": true,
+        "detail": "engines.dpll_solver.cnf_utils",
+        "documentation": {}
+    },
+    {
+        "label": "dpll",
+        "importPath": "engines.dpll_solver.dpll_algorithm",
+        "description": "engines.dpll_solver.dpll_algorithm",
+        "isExtraImport": true,
+        "detail": "engines.dpll_solver.dpll_algorithm",
+        "documentation": {}
+    },
+    {
+        "label": "LetterFeedback",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "LetterFeedback",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_guess",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "guess_is_correct",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "validate_word",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "LetterFeedback",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "LetterFeedback",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_guess",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "guess_is_correct",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "validate_word",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "LetterFeedback",
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "isExtraImport": true,
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "Counter",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "unicodedata",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unicodedata",
+        "description": "unicodedata",
+        "detail": "unicodedata",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "LogicEngine",
+        "importPath": "engines.dpll_solver.dpll_solver_engine",
+        "description": "engines.dpll_solver.dpll_solver_engine",
+        "isExtraImport": true,
+        "detail": "engines.dpll_solver.dpll_solver_engine",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "patch",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "GameState",
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "isExtraImport": true,
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "TermoGame",
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "isExtraImport": true,
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "load_words",
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "isExtraImport": true,
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "get_symbol",
+        "kind": 2,
+        "importPath": "engines.dpll_solver.cnf_utils",
+        "description": "engines.dpll_solver.cnf_utils",
+        "peekOfCode": "def get_symbol(literal):\n    if isinstance(literal, Not):\n        return literal.args[0]\n    return literal\ndef negate_literal(literal):\n    if isinstance(literal, Not):\n        return literal.args[0]\n    return Not(literal)\ndef to_set_of_literals(clause):\n    if isinstance(clause, Or):",
+        "detail": "engines.dpll_solver.cnf_utils",
+        "documentation": {}
+    },
+    {
+        "label": "negate_literal",
+        "kind": 2,
+        "importPath": "engines.dpll_solver.cnf_utils",
+        "description": "engines.dpll_solver.cnf_utils",
+        "peekOfCode": "def negate_literal(literal):\n    if isinstance(literal, Not):\n        return literal.args[0]\n    return Not(literal)\ndef to_set_of_literals(clause):\n    if isinstance(clause, Or):\n        return set(clause.args)\n    return {clause}\ndef to_cnf_clauses(formula):\n    cnf_form = to_cnf(formula)",
+        "detail": "engines.dpll_solver.cnf_utils",
+        "documentation": {}
+    },
+    {
+        "label": "to_set_of_literals",
+        "kind": 2,
+        "importPath": "engines.dpll_solver.cnf_utils",
+        "description": "engines.dpll_solver.cnf_utils",
+        "peekOfCode": "def to_set_of_literals(clause):\n    if isinstance(clause, Or):\n        return set(clause.args)\n    return {clause}\ndef to_cnf_clauses(formula):\n    cnf_form = to_cnf(formula)\n    if isinstance(cnf_form, And):\n        return [to_set_of_literals(clause) for clause in cnf_form.args]\n    return [to_set_of_literals(cnf_form)]",
+        "detail": "engines.dpll_solver.cnf_utils",
+        "documentation": {}
+    },
+    {
+        "label": "to_cnf_clauses",
+        "kind": 2,
+        "importPath": "engines.dpll_solver.cnf_utils",
+        "description": "engines.dpll_solver.cnf_utils",
+        "peekOfCode": "def to_cnf_clauses(formula):\n    cnf_form = to_cnf(formula)\n    if isinstance(cnf_form, And):\n        return [to_set_of_literals(clause) for clause in cnf_form.args]\n    return [to_set_of_literals(cnf_form)]",
+        "detail": "engines.dpll_solver.cnf_utils",
+        "documentation": {}
+    },
+    {
+        "label": "dpll",
+        "kind": 2,
+        "importPath": "engines.dpll_solver.dpll_algorithm",
+        "description": "engines.dpll_solver.dpll_algorithm",
+        "peekOfCode": "def dpll(clauses, assignment=None):\n    \"\"\"Implementa o algoritmo DPLL com Unit Propagation para satisfatibilidade.\"\"\"\n    if assignment is None:\n        assignment = {}\n    current_clauses = [c.copy() for c in clauses]\n    current_assignment = assignment.copy()\n    while True:\n        unit_clause_found = False\n        for clause in current_clauses:\n            if len(clause) == 1:",
+        "detail": "engines.dpll_solver.dpll_algorithm",
+        "documentation": {}
+    },
+    {
+        "label": "LogicEngine",
+        "kind": 6,
+        "importPath": "engines.dpll_solver.dpll_solver_engine",
+        "description": "engines.dpll_solver.dpll_solver_engine",
+        "peekOfCode": "class LogicEngine:\n    \"\"\"Motor lógico que gerencia o estado de conhecimento e filtra palavras.\"\"\"\n    def __init__(self):\n        self.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'\n        self.position_symbols = {}\n        self.knowledge_base = []\n        self.cached_cnf = None\n        # Inicializa a matriz de símbolos lógicos (Pos0_A, Pos0_B, etc.)\n        for i in range(5):\n            for letter in self.letters:",
+        "detail": "engines.dpll_solver.dpll_solver_engine",
+        "documentation": {}
+    },
+    {
+        "label": "LetterFeedback",
+        "kind": 6,
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "peekOfCode": "class LetterFeedback(str, Enum):\n    CORRECT = \"correct\"\n    PRESENT = \"present\"\n    WRONG = \"wrong\"\ndef normalize_word(word: str) -> str:\n    normalized_word = unicodedata.normalize(\"NFKD\", word.strip())\n    without_accents = \"\".join(\n        letter for letter in normalized_word if not unicodedata.combining(letter)\n    )\n    return without_accents.upper()",
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_word",
+        "kind": 2,
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "peekOfCode": "def normalize_word(word: str) -> str:\n    normalized_word = unicodedata.normalize(\"NFKD\", word.strip())\n    without_accents = \"\".join(\n        letter for letter in normalized_word if not unicodedata.combining(letter)\n    )\n    return without_accents.upper()\ndef validate_word(word: str) -> str:\n    normalized = normalize_word(word)\n    if len(normalized) != WORD_LENGTH:\n        raise ValueError(\"A palavra deve ter exatamente 5 letras.\")",
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "validate_word",
+        "kind": 2,
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "peekOfCode": "def validate_word(word: str) -> str:\n    normalized = normalize_word(word)\n    if len(normalized) != WORD_LENGTH:\n        raise ValueError(\"A palavra deve ter exatamente 5 letras.\")\n    if not normalized.isalpha() or not normalized.isascii():\n        raise ValueError(\"A palavra deve conter apenas letras de A a Z.\")\n    return normalized\ndef evaluate_guess(answer: str, guess: str) -> tuple[LetterFeedback, ...]:\n    answer = validate_word(answer)\n    guess = validate_word(guess)",
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_guess",
+        "kind": 2,
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "peekOfCode": "def evaluate_guess(answer: str, guess: str) -> tuple[LetterFeedback, ...]:\n    answer = validate_word(answer)\n    guess = validate_word(guess)\n    feedback: list[LetterFeedback | None] = [None] * WORD_LENGTH\n    remaining_letters: Counter[str] = Counter()\n    for index, guessed_letter in enumerate(guess):\n        if guessed_letter == answer[index]:\n            feedback[index] = LetterFeedback.CORRECT\n        else:\n            remaining_letters[answer[index]] += 1",
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "guess_is_correct",
+        "kind": 2,
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "peekOfCode": "def guess_is_correct(feedback: tuple[LetterFeedback, ...]) -> bool:\n    for result in feedback:\n        if result != LetterFeedback.CORRECT:\n            return False\n    return True",
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "WORD_LENGTH",
+        "kind": 5,
+        "importPath": "game.feedback",
+        "description": "game.feedback",
+        "peekOfCode": "WORD_LENGTH = 5\nclass LetterFeedback(str, Enum):\n    CORRECT = \"correct\"\n    PRESENT = \"present\"\n    WRONG = \"wrong\"\ndef normalize_word(word: str) -> str:\n    normalized_word = unicodedata.normalize(\"NFKD\", word.strip())\n    without_accents = \"\".join(\n        letter for letter in normalized_word if not unicodedata.combining(letter)\n    )",
+        "detail": "game.feedback",
+        "documentation": {}
+    },
+    {
+        "label": "GuessResult",
+        "kind": 6,
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "peekOfCode": "class GuessResult:\n    guess: str\n    feedback: tuple[LetterFeedback, ...]\n@dataclass(frozen=True, slots=True)\nclass GameState:\n    history: tuple[GuessResult, ...]\n    attempts_remaining: int\n    won: bool\n    lost: bool\n    over: bool",
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "GameState",
+        "kind": 6,
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "peekOfCode": "class GameState:\n    history: tuple[GuessResult, ...]\n    attempts_remaining: int\n    won: bool\n    lost: bool\n    over: bool\ndef load_words(path: str | Path = DEFAULT_WORDS_PATH) -> tuple[str, ...]:\n    dataset_path = Path(path)\n    with dataset_path.open(encoding=\"utf-8\") as dataset:\n        words: list[str] = []",
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "TermoGame",
+        "kind": 6,
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "peekOfCode": "class TermoGame:\n    def __init__(self) -> None:\n        words = load_words()\n        self._answer = random.choice(words)\n        self._max_attempts = MAX_ATTEMPTS\n        self._history = []\n        self._won = False\n    @property\n    def state(self) -> GameState:\n        attempts_remaining = self._max_attempts - len(self._history)",
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "load_words",
+        "kind": 2,
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "peekOfCode": "def load_words(path: str | Path = DEFAULT_WORDS_PATH) -> tuple[str, ...]:\n    dataset_path = Path(path)\n    with dataset_path.open(encoding=\"utf-8\") as dataset:\n        words: list[str] = []\n        for line in dataset:\n            stripped_line = line.strip()\n            if stripped_line:\n                words.append(stripped_line)\n    return tuple(words)\nclass TermoGame:",
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_WORDS_PATH",
+        "kind": 5,
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "peekOfCode": "DEFAULT_WORDS_PATH = (\n    Path(__file__).resolve().parent.parent / \"dataset\" / \"words.txt\"\n)\nMAX_ATTEMPTS = 6\n@dataclass(frozen=True, slots=True)\nclass GuessResult:\n    guess: str\n    feedback: tuple[LetterFeedback, ...]\n@dataclass(frozen=True, slots=True)\nclass GameState:",
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_ATTEMPTS",
+        "kind": 5,
+        "importPath": "game.termo",
+        "description": "game.termo",
+        "peekOfCode": "MAX_ATTEMPTS = 6\n@dataclass(frozen=True, slots=True)\nclass GuessResult:\n    guess: str\n    feedback: tuple[LetterFeedback, ...]\n@dataclass(frozen=True, slots=True)\nclass GameState:\n    history: tuple[GuessResult, ...]\n    attempts_remaining: int\n    won: bool",
+        "detail": "game.termo",
+        "documentation": {}
+    },
+    {
+        "label": "LogicEngineTestCase",
+        "kind": 6,
+        "importPath": "tests.test_dpll_solver_engine",
+        "description": "tests.test_dpll_solver_engine",
+        "peekOfCode": "class LogicEngineTestCase(unittest.TestCase):\n    def setUp(self):\n        self.engine = LogicEngine()\n    def test_initially_all_words_are_possible(self):\n        # Sem nenhum feedback, qualquer palavra do dicionário deve ser aceita\n        self.assertTrue(self.engine.is_word_possible(\"TERMO\"))\n        self.assertTrue(self.engine.is_word_possible(\"SAGAZ\"))\n    def test_correct_feedback_filters_words(self):\n        # Chute: \"PORTA\". Feedback diz que APENAS o 'T' (pos 3) está correto.\n        self.engine.process_feedback(\"PORTA\", (W, W, W, C, W))",
+        "detail": "tests.test_dpll_solver_engine",
+        "documentation": {}
+    },
+    {
+        "label": "C",
+        "kind": 5,
+        "importPath": "tests.test_dpll_solver_engine",
+        "description": "tests.test_dpll_solver_engine",
+        "peekOfCode": "C = LetterFeedback.CORRECT\nP = LetterFeedback.PRESENT\nW = LetterFeedback.WRONG\nclass LogicEngineTestCase(unittest.TestCase):\n    def setUp(self):\n        self.engine = LogicEngine()\n    def test_initially_all_words_are_possible(self):\n        # Sem nenhum feedback, qualquer palavra do dicionário deve ser aceita\n        self.assertTrue(self.engine.is_word_possible(\"TERMO\"))\n        self.assertTrue(self.engine.is_word_possible(\"SAGAZ\"))",
+        "detail": "tests.test_dpll_solver_engine",
+        "documentation": {}
+    },
+    {
+        "label": "P",
+        "kind": 5,
+        "importPath": "tests.test_dpll_solver_engine",
+        "description": "tests.test_dpll_solver_engine",
+        "peekOfCode": "P = LetterFeedback.PRESENT\nW = LetterFeedback.WRONG\nclass LogicEngineTestCase(unittest.TestCase):\n    def setUp(self):\n        self.engine = LogicEngine()\n    def test_initially_all_words_are_possible(self):\n        # Sem nenhum feedback, qualquer palavra do dicionário deve ser aceita\n        self.assertTrue(self.engine.is_word_possible(\"TERMO\"))\n        self.assertTrue(self.engine.is_word_possible(\"SAGAZ\"))\n    def test_correct_feedback_filters_words(self):",
+        "detail": "tests.test_dpll_solver_engine",
+        "documentation": {}
+    },
+    {
+        "label": "W",
+        "kind": 5,
+        "importPath": "tests.test_dpll_solver_engine",
+        "description": "tests.test_dpll_solver_engine",
+        "peekOfCode": "W = LetterFeedback.WRONG\nclass LogicEngineTestCase(unittest.TestCase):\n    def setUp(self):\n        self.engine = LogicEngine()\n    def test_initially_all_words_are_possible(self):\n        # Sem nenhum feedback, qualquer palavra do dicionário deve ser aceita\n        self.assertTrue(self.engine.is_word_possible(\"TERMO\"))\n        self.assertTrue(self.engine.is_word_possible(\"SAGAZ\"))\n    def test_correct_feedback_filters_words(self):\n        # Chute: \"PORTA\". Feedback diz que APENAS o 'T' (pos 3) está correto.",
+        "detail": "tests.test_dpll_solver_engine",
+        "documentation": {}
+    },
+    {
+        "label": "FeedbackTestCase",
+        "kind": 6,
+        "importPath": "tests.test_feedback",
+        "description": "tests.test_feedback",
+        "peekOfCode": "class FeedbackTestCase(unittest.TestCase):\n    def test_marks_all_letters_correct(self):\n        feedback = evaluate_guess(\"TERMO\", \"TERMO\")\n        self.assertEqual(feedback, (C, C, C, C, C))\n        self.assertTrue(guess_is_correct(feedback))\n    def test_marks_present_letters_in_wrong_positions(self):\n        feedback = evaluate_guess(\"TERMO\", \"OMTRE\")\n        self.assertEqual(feedback, (P, P, P, P, P))\n        self.assertFalse(guess_is_correct(feedback))\n    def test_marks_wrong_letters(self):",
+        "detail": "tests.test_feedback",
+        "documentation": {}
+    },
+    {
+        "label": "C",
+        "kind": 5,
+        "importPath": "tests.test_feedback",
+        "description": "tests.test_feedback",
+        "peekOfCode": "C = LetterFeedback.CORRECT\nP = LetterFeedback.PRESENT\nW = LetterFeedback.WRONG\nclass FeedbackTestCase(unittest.TestCase):\n    def test_marks_all_letters_correct(self):\n        feedback = evaluate_guess(\"TERMO\", \"TERMO\")\n        self.assertEqual(feedback, (C, C, C, C, C))\n        self.assertTrue(guess_is_correct(feedback))\n    def test_marks_present_letters_in_wrong_positions(self):\n        feedback = evaluate_guess(\"TERMO\", \"OMTRE\")",
+        "detail": "tests.test_feedback",
+        "documentation": {}
+    },
+    {
+        "label": "P",
+        "kind": 5,
+        "importPath": "tests.test_feedback",
+        "description": "tests.test_feedback",
+        "peekOfCode": "P = LetterFeedback.PRESENT\nW = LetterFeedback.WRONG\nclass FeedbackTestCase(unittest.TestCase):\n    def test_marks_all_letters_correct(self):\n        feedback = evaluate_guess(\"TERMO\", \"TERMO\")\n        self.assertEqual(feedback, (C, C, C, C, C))\n        self.assertTrue(guess_is_correct(feedback))\n    def test_marks_present_letters_in_wrong_positions(self):\n        feedback = evaluate_guess(\"TERMO\", \"OMTRE\")\n        self.assertEqual(feedback, (P, P, P, P, P))",
+        "detail": "tests.test_feedback",
+        "documentation": {}
+    },
+    {
+        "label": "W",
+        "kind": 5,
+        "importPath": "tests.test_feedback",
+        "description": "tests.test_feedback",
+        "peekOfCode": "W = LetterFeedback.WRONG\nclass FeedbackTestCase(unittest.TestCase):\n    def test_marks_all_letters_correct(self):\n        feedback = evaluate_guess(\"TERMO\", \"TERMO\")\n        self.assertEqual(feedback, (C, C, C, C, C))\n        self.assertTrue(guess_is_correct(feedback))\n    def test_marks_present_letters_in_wrong_positions(self):\n        feedback = evaluate_guess(\"TERMO\", \"OMTRE\")\n        self.assertEqual(feedback, (P, P, P, P, P))\n        self.assertFalse(guess_is_correct(feedback))",
+        "detail": "tests.test_feedback",
+        "documentation": {}
+    },
+    {
+        "label": "LoadWordsTestCase",
+        "kind": 6,
+        "importPath": "tests.test_termo",
+        "description": "tests.test_termo",
+        "peekOfCode": "class LoadWordsTestCase(unittest.TestCase):\n    def test_loads_non_empty_lines_without_normalization(self):\n        with tempfile.TemporaryDirectory() as temporary_directory:\n            dataset_path = Path(temporary_directory) / \"words.txt\"\n            dataset_path.write_text(\n                \"TERMO\\nORGAO\\n\\nTERMO\\n\",\n                encoding=\"utf-8\",\n            )\n            words = load_words(dataset_path)\n        self.assertEqual(words, (\"TERMO\", \"ORGAO\", \"TERMO\"))",
+        "detail": "tests.test_termo",
+        "documentation": {}
+    },
+    {
+        "label": "TermoGameTestCase",
+        "kind": 6,
+        "importPath": "tests.test_termo",
+        "description": "tests.test_termo",
+        "peekOfCode": "class TermoGameTestCase(unittest.TestCase):\n    def setUp(self):\n        load_words_patcher = patch(\n            \"game.termo.load_words\",\n            return_value=(\"TERMO\",),\n        )\n        self.load_words_mock = load_words_patcher.start()\n        self.addCleanup(load_words_patcher.stop)\n    def test_starts_with_empty_state_without_exposing_answer(self):\n        game = TermoGame()",
+        "detail": "tests.test_termo",
+        "documentation": {}
+    },
+    {
+        "label": "C",
+        "kind": 5,
+        "importPath": "tests.test_termo",
+        "description": "tests.test_termo",
+        "peekOfCode": "C = LetterFeedback.CORRECT\nP = LetterFeedback.PRESENT\nW = LetterFeedback.WRONG\nclass LoadWordsTestCase(unittest.TestCase):\n    def test_loads_non_empty_lines_without_normalization(self):\n        with tempfile.TemporaryDirectory() as temporary_directory:\n            dataset_path = Path(temporary_directory) / \"words.txt\"\n            dataset_path.write_text(\n                \"TERMO\\nORGAO\\n\\nTERMO\\n\",\n                encoding=\"utf-8\",",
+        "detail": "tests.test_termo",
+        "documentation": {}
+    },
+    {
+        "label": "P",
+        "kind": 5,
+        "importPath": "tests.test_termo",
+        "description": "tests.test_termo",
+        "peekOfCode": "P = LetterFeedback.PRESENT\nW = LetterFeedback.WRONG\nclass LoadWordsTestCase(unittest.TestCase):\n    def test_loads_non_empty_lines_without_normalization(self):\n        with tempfile.TemporaryDirectory() as temporary_directory:\n            dataset_path = Path(temporary_directory) / \"words.txt\"\n            dataset_path.write_text(\n                \"TERMO\\nORGAO\\n\\nTERMO\\n\",\n                encoding=\"utf-8\",\n            )",
+        "detail": "tests.test_termo",
+        "documentation": {}
+    },
+    {
+        "label": "W",
+        "kind": 5,
+        "importPath": "tests.test_termo",
+        "description": "tests.test_termo",
+        "peekOfCode": "W = LetterFeedback.WRONG\nclass LoadWordsTestCase(unittest.TestCase):\n    def test_loads_non_empty_lines_without_normalization(self):\n        with tempfile.TemporaryDirectory() as temporary_directory:\n            dataset_path = Path(temporary_directory) / \"words.txt\"\n            dataset_path.write_text(\n                \"TERMO\\nORGAO\\n\\nTERMO\\n\",\n                encoding=\"utf-8\",\n            )\n            words = load_words(dataset_path)",
+        "detail": "tests.test_termo",
+        "documentation": {}
+    }
+]
