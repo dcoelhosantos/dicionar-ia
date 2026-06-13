@@ -12,7 +12,7 @@ class LogicEngine:
         self.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.position_symbols = {}
         self.knowledge_base = []
-        self.cached_cnf = None
+        self._cached_cnf = None
 
         # Inicializa a matriz de símbolos lógicos (Pos0_A, Pos0_B, etc.)
         for i in range(5):
@@ -46,7 +46,7 @@ class LogicEngine:
                 if letter not in letters_with_positive_feedback:
                     for j in range(5):
                         self.knowledge_base.append(Not(self.position_symbols[f"Pos{j}_{letter}"]))
-        self.cached_cnf = None
+        self._cached_cnf = None
 
     def is_word_possible(self, word: str) -> bool:
         """Verifica se a palavra candidata satisfaz todas as regras da base de conhecimento."""
@@ -65,7 +65,7 @@ class LogicEngine:
                     other_symbol = self.position_symbols[f"Pos{i}_{other_letter}"]
                     word_clauses.append({Not(other_symbol)})
 
-        test_clauses = self.cached_cnf + word_clauses
+        test_clauses = self._cached_cnf + word_clauses
         result = dpll(test_clauses)
 
         return result is not False
