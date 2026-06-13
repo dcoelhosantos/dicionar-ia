@@ -27,7 +27,10 @@ def render_text(renderable) -> str:
 
 class TermoCliTests(unittest.TestCase):
     def make_game(self) -> TermoGame:
-        with patch("game.termo.load_words", return_value=("TERMO",)):
+        with (
+            patch("game.termo.load_words", return_value=("TERMO", "AAAAA")),
+            patch("game.termo.random.choice", return_value="TERMO"),
+        ):
             return TermoGame()
 
     def test_build_tile_applies_feedback_style(self) -> None:
@@ -120,7 +123,7 @@ class TermoCliTests(unittest.TestCase):
 
     def test_menu_inicia_jogo_e_sai(self) -> None:
         console = make_console()
-        inputs = iter(["2"])
+        inputs = iter(["4"])
 
         with patch("game.cli.play_manual_game") as play_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
@@ -130,13 +133,33 @@ class TermoCliTests(unittest.TestCase):
 
     def test_opcao_invalida_solicita_nova_escolha(self) -> None:
         console = make_console()
-        inputs = iter(["9", "2"])
+        inputs = iter(["9", "4"])
 
         with patch("game.cli.play_manual_game") as play_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         play_mock.assert_not_called()
         self.assertIn("Opção inválida", console.export_text())
+
+    def test_engine_menu_navigates_and_shows_development_message(self) -> None:
+        console = make_console()
+        inputs = iter(["2", "5", "1", "3", "6", "4"])
+
+        cli.run_cli(console=console, input_function=lambda _: next(inputs))
+
+        output = console.export_text()
+        self.assertIn("Escolha um motor", output)
+        self.assertIn("DPLL Solver", output)
+        self.assertIn("Modo manual assistido", output)
+        self.assertIn("Funcionalidade em desenvolvimento", output)
+
+    def test_compare_engines_shows_development_message(self) -> None:
+        console = make_console()
+        inputs = iter(["3", "4"])
+
+        cli.run_cli(console=console, input_function=lambda _: next(inputs))
+
+        self.assertIn("Funcionalidade em desenvolvimento", console.export_text())
 
     def test_play_manual_game_handles_invalid_guess_without_consuming_turn(self) -> None:
         game = self.make_game()
@@ -149,6 +172,21 @@ class TermoCliTests(unittest.TestCase):
         self.assertTrue(result)
         self.assertEqual(len(game.state.history), 1)
         self.assertIn("de 5 letras", console.export_text())
+
+    def test_play_manual_game_rejects_guess_outside_dataset(self) -> None:
+        game = self.make_game()
+        console = make_console()
+        inputs = iter(["ABCDE", "TERMO", ""])
+
+        with patch("game.cli.TermoGame", return_value=game):
+            result = cli.play_manual_game(
+                console=console,
+                input_function=lambda _: next(inputs),
+            )
+
+        self.assertTrue(result)
+        self.assertEqual(len(game.state.history), 1)
+        self.assertIn("não pertence ao dataset", console.export_text())
 
     def test_play_manual_game_reveals_answer_after_loss(self) -> None:
         game = self.make_game()
