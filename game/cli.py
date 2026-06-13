@@ -12,6 +12,14 @@ from game.termo import GameState, GuessResult, TermoGame
 
 InputFunction = Callable[[str], str]
 
+ENGINE_NAMES = (
+    "CSP",
+    "Naive Bayes",
+    "Minimax",
+    "Model Checking",
+    "DPLL Solver",
+)
+
 FEEDBACK_STYLES = {
     LetterFeedback.CORRECT: "bold white on green",
     LetterFeedback.PRESENT: "bold black on yellow",
@@ -108,7 +116,7 @@ def build_game_view(state: GameState, message: str | None = None) -> Panel:
             build_board(state),
             build_legend(),
         ),
-        title="Tabuleiro",
+        title="Dicionar-ia",
         border_style="cyan",
         padding=(1, 2),
     )
@@ -129,8 +137,10 @@ def show_main_menu(console: Console) -> None:
     menu = Panel(
         Group(
             Text("Dicionar-IA", style="bold magenta", justify="center"),
-            Text("1. Jogar", style="bold green"),
-            Text("2. Sair", style="bold red"),
+            Text("1. Jogar manualmente", style="bold green"),
+            Text("2. Escolher um motor", style="bold cyan"),
+            Text("3. Comparar motores", style="bold cyan"),
+            Text("4. Sair", style="bold red"),
         ),
         title="Menu principal",
         border_style="cyan",
@@ -138,6 +148,87 @@ def show_main_menu(console: Console) -> None:
         padding=(1, 2),
     )
     console.print(menu)
+
+
+def show_engine_menu(console: Console) -> None:
+    options = [
+        Text(f"{index}. {engine_name}", style="bold cyan")
+        for index, engine_name in enumerate(ENGINE_NAMES, start=1)
+    ]
+    options.append(Text("6. Voltar", style="bold red"))
+
+    console.print(
+        Panel(
+            Group(*options),
+            title="Escolha um motor",
+            border_style="cyan",
+            box=box.ROUNDED,
+            padding=(1, 2),
+        )
+    )
+
+
+def show_engine_mode_menu(console: Console, engine_name: str) -> None:
+    console.print(
+        Panel(
+            Group(
+                Text("1. Modo manual assistido", style="bold green"),
+                Text("2. Resolução automática", style="bold cyan"),
+                Text("3. Voltar", style="bold red"),
+            ),
+            title=engine_name,
+            border_style="cyan",
+            box=box.ROUNDED,
+            padding=(1, 2),
+        )
+    )
+
+
+def show_development_message(console: Console) -> None:
+    console.print(
+        Panel(
+            "Funcionalidade em desenvolvimento.",
+            border_style="yellow",
+        )
+    )
+
+
+def run_engine_mode_menu(
+    console: Console,
+    engine_name: str,
+    input_function: InputFunction,
+) -> None:
+    while True:
+        show_engine_mode_menu(console, engine_name)
+        choice = input_function("Escolha uma opção: ").strip()
+
+        if choice in {"1", "2"}:
+            show_development_message(console)
+            continue
+
+        if choice == "3":
+            return
+
+        console.print(Panel("Opção inválida. Tente novamente.", border_style="red"))
+
+
+def run_engine_menu(
+    console: Console,
+    input_function: InputFunction,
+) -> None:
+    while True:
+        show_engine_menu(console)
+        choice = input_function("Escolha uma opção: ").strip()
+
+        if choice == "6":
+            return
+
+        if choice in {"1", "2", "3", "4", "5"}:
+            engine_name = ENGINE_NAMES[int(choice) - 1]
+            run_engine_mode_menu(console, engine_name, input_function)
+            continue
+
+        console.print(Panel("Opção inválida. Tente novamente.", border_style="red"))
 
 
 def play_manual_game(
@@ -200,6 +291,17 @@ def run_cli(
             continue
 
         if choice == "2":
+            try:
+                run_engine_menu(console, input_function)
+            except (EOFError, KeyboardInterrupt):
+                break
+            continue
+
+        if choice == "3":
+            show_development_message(console)
+            continue
+
+        if choice == "4":
             console.print("Jogo finalizado!")
             break
 

@@ -50,6 +50,7 @@ class TermoGame:
         words = load_words()
 
         self._answer = random.choice(words)
+        self._valid_words = set(words)
         self._max_attempts = MAX_ATTEMPTS
         self._history = []
         self._won = False
@@ -91,6 +92,9 @@ class TermoGame:
             raise RuntimeError("A partida já foi encerrada.")
 
         normalized_guess = validate_word(guess)
+
+        if normalized_guess not in self._valid_words:
+            raise ValueError("A palavra não pertence ao dataset.")
 
         feedback = evaluate_guess(self._answer, normalized_guess)
         result = GuessResult(guess=normalized_guess, feedback=feedback)
