@@ -27,13 +27,25 @@ class MinimaxEngine:
             if not vocabulary:
                 raise ValueError("vocabulário não deve estar vazio")
             self._possible_answers = list(vocabulary)
-            rreturn "ROSEA" if "ROSEA" in vocabulary else vocabulary[0]
+            return "ROSEA" if "ROSEA" in vocabulary else vocabulary[0]
 
         # Atualização
-        self._possible_answers = [
-            word for word in vocabulary
-            if all(self._is_valid_candidate(word, result.guess, result.feedback) for result in state.history)
-        ]
+        if self._possible_answers:
+            last_result = state.history[-1]
+            self._possible_answers = [
+                word for word in self._possible_answers
+                if self._is_valid_candidate(word, last_result.guess, last_result.feedback)
+            ]
+        else:
+            self._possible_answers = list(vocabulary)
+            for result in state.history:
+                self._possible_answers = [
+                    word for word in self._possible_answers
+                    if self._is_valid_candidate(word, result.guess, result.feedback)
+                ]
+
+        if not self._possible_answers:
+            raise ValueError("Nenhum candidato restante no vocabulário para este histórico.")
 
         if len(self._possible_answers) == 1:
             return self._possible_answers[0]
