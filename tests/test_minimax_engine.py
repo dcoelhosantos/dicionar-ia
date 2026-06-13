@@ -1,7 +1,7 @@
 import unittest
 from game.termo import GameState
 from game.feedback import LetterFeedback
-from engines.minimax_engine import MinimaxEngine
+from engines.minimax.minimax_engine import MinimaxEngine
 
 C = LetterFeedback.CORRECT
 P = LetterFeedback.PRESENT
