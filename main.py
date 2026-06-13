@@ -1,5 +1,5 @@
 from pathlib import Path
-from game.termo import GameState, load_words
+from game.termo import load_words
 from metrics.evaluator import Evaluator
 from engines.minimax_engine import MinimaxEngine
 
@@ -12,9 +12,10 @@ def main() -> None:
     print(f"Vocabulário carregado com sucesso: {len(vocabulary)} palavras.")
 
     engine = MinimaxEngine()
-    evaluator = Evaluator(engine=engine, vocabulary=vocabulary, num_games=50)
+    num_games = 50
+    evaluator = Evaluator(engine=engine, vocabulary=vocabulary, num_games=num_games)
 
-    print(f"Avaliando motor [{engine.__class__.__name__}] em {evaluator._num_games} partidas...\n")
+     print(f"Avaliando motor [{engine.__class__.__name__}] em {num_games} partidas...\n")
 
     results = evaluator.run()
 

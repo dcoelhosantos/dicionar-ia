@@ -17,8 +17,12 @@ class Evaluator:
         total_attempts = 0
         start_time = time.time()
 
+        import random
+
         for _ in range(self._num_games):
             game = TermoGame()
+
+            game._answer = random.choice(self._vocabulary)
 
             while not game.state.over:
                 guess = self._engine.make_guess(game.state, self._vocabulary)
