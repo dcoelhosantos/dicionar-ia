@@ -145,9 +145,9 @@ class TermoCliTests(unittest.TestCase):
         play_mock.assert_not_called()
         self.assertIn("Opção inválida", console.export_text())
 
-    def test_engine_menu_blocks_unavailable_engine(self) -> None:
+    def test_engine_menu_displays_available_engines(self) -> None:
         console = make_console()
-        inputs = iter(["2", "3", "5", "5"])
+        inputs = iter(["2", "3", "3", "5", "5"])
 
         cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
@@ -155,8 +155,8 @@ class TermoCliTests(unittest.TestCase):
         self.assertIn("Escolha um motor", output)
         self.assertIn("Naive Bayes", output)
         self.assertNotIn("Naive Bayes (indisponível)", output)
-        self.assertIn("Model Checking (indisponível)", output)
-        self.assertIn("ainda não está disponível", output)
+        self.assertIn("Model Checking", output)
+        self.assertNotIn("Model Checking (indisponível)", output)
 
     def test_engine_menu_runs_available_engine_mode(self) -> None:
         console = make_console()

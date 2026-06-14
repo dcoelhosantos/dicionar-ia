@@ -37,7 +37,7 @@ class EngineSessionTestCase(unittest.TestCase):
         self.assertTrue(availability["Naive Bayes"])
         self.assertTrue(availability["Minimax"])
         self.assertTrue(availability["DPLL Solver"])
-        self.assertFalse(availability["Model Checking"])
+        self.assertTrue(availability["Model Checking"])
 
     def test_suggestions_include_recommendation_and_unique_candidates(self):
         session = EngineSession(

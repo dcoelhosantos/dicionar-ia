@@ -28,7 +28,7 @@ class MainTestCase(unittest.TestCase):
         ]
         self.assertEqual(
             evaluated_engines,
-            ["NaiveBayesEngine", "MinimaxEngine", "LogicEngine"],
+            ["NaiveBayesEngine", "MinimaxEngine", "DpllEngine"],
         )
 
 
