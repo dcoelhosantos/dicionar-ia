@@ -8,13 +8,13 @@ from metrics.evaluator import Evaluator
 
 
 def run_evaluation() -> None:
-    print("Iniciando...\n")
+    print("Iniciando avaliação dos motores...\n")
 
     dataset_path = Path(__file__).resolve().parent / "dataset" / "words.txt"
     vocabulary = load_words(dataset_path)
     num_games = 50
 
-    print(f"Vocabulário carregado com sucesso: {len(vocabulary)} palavras.")
+    print(f"Dataset carregado com sucesso: {len(vocabulary)} palavras.")
 
     for engine in (MinimaxEngine(), LogicEngine()):
         name = engine.__class__.__name__
@@ -27,7 +27,7 @@ def run_evaluation() -> None:
                 num_games=num_games,
             )
             results = evaluator.run()
-        # A falha de um motor não deve impedir a avaliação dos demais.
+
         except Exception as error:
             print(f"Erro ao avaliar motor [{name}]: {error}")
             continue
