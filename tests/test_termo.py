@@ -141,6 +141,19 @@ class TermoGameTestCase(unittest.TestCase):
         random_choice_mock.assert_called_once_with(self.words)
         self.assertTrue(all(item == C for item in result.feedback))
 
+    def test_creates_independent_games_with_shared_answer(self):
+        answer, games = TermoGame.create_shared_games(2)
+
+        games[0].make_guess("CASAS")
+
+        self.assertEqual(answer, "TERMO")
+        self.assertEqual(len(games[0].state.history), 1)
+        self.assertEqual(games[1].state.history, ())
+
+    def test_rejects_invalid_shared_game_count(self):
+        with self.assertRaisesRegex(ValueError, "maior que zero"):
+            TermoGame.create_shared_games(0)
+
 
 if __name__ == "__main__":
     unittest.main()

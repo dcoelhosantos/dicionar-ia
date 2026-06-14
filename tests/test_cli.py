@@ -93,7 +93,10 @@ class TermoCliTests(unittest.TestCase):
             over=False,
         )
 
-        self.assertEqual(cli.collect_wrong_letters(state), ("A", "B", "C", "D", "E", "F", "G", "H", "I"))
+        self.assertEqual(
+            cli.collect_wrong_letters(state),
+            ("A", "B", "C", "D", "E", "F", "G", "H", "I"),
+        )
 
     def test_wrong_letters_panel_displays_title_and_letters(self) -> None:
         state = GameState(
@@ -141,33 +144,48 @@ class TermoCliTests(unittest.TestCase):
         play_mock.assert_not_called()
         self.assertIn("Opção inválida", console.export_text())
 
-    def test_engine_menu_navigates_and_shows_development_message(self) -> None:
+    def test_engine_menu_blocks_unavailable_engine(self) -> None:
         console = make_console()
-        inputs = iter(["2", "5", "1", "3", "6", "4"])
+        inputs = iter(["2", "1", "6", "4"])
 
         cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         output = console.export_text()
         self.assertIn("Escolha um motor", output)
-        self.assertIn("DPLL Solver", output)
-        self.assertIn("Modo manual assistido", output)
-        self.assertIn("Funcionalidade em desenvolvimento", output)
+        self.assertIn("CSP (indisponível)", output)
+        self.assertIn("ainda não está disponível", output)
 
-    def test_compare_engines_shows_development_message(self) -> None:
+    def test_engine_menu_runs_available_engine_mode(self) -> None:
+        console = make_console()
+        inputs = iter(["2", "5", "1", "3", "6", "4"])
+
+        with patch("game.cli.play_assisted_game") as assisted_mock:
+            cli.run_cli(console=console, input_function=lambda _: next(inputs))
+
+        assisted_mock.assert_called_once()
+
+    def test_compare_engines_runs_from_main_menu(self) -> None:
         console = make_console()
         inputs = iter(["3", "4"])
 
-        cli.run_cli(console=console, input_function=lambda _: next(inputs))
+        with (
+            patch("game.cli.compare_engines") as compare_mock,
+            patch("game.cli.pause"),
+        ):
+            cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
-        self.assertIn("Funcionalidade em desenvolvimento", console.export_text())
+        compare_mock.assert_called_once_with(console)
 
-    def test_play_manual_game_handles_invalid_guess_without_consuming_turn(self) -> None:
+    def test_invalid_guess_does_not_consume_turn(self) -> None:
         game = self.make_game()
         console = make_console()
         inputs = iter(["ABC", "TERMO", ""])
 
         with patch("game.cli.TermoGame", return_value=game):
-            result = cli.play_manual_game(console=console, input_function=lambda _: next(inputs))
+            result = cli.play_manual_game(
+                console=console,
+                input_function=lambda _: next(inputs),
+            )
 
         self.assertTrue(result)
         self.assertEqual(len(game.state.history), 1)
@@ -194,12 +212,101 @@ class TermoCliTests(unittest.TestCase):
         inputs = iter(["AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA", ""])
 
         with patch("game.cli.TermoGame", return_value=game):
-            result = cli.play_manual_game(console=console, input_function=lambda _: next(inputs))
+            result = cli.play_manual_game(
+                console=console,
+                input_function=lambda _: next(inputs),
+            )
 
         self.assertTrue(result)
         self.assertTrue(game.state.over)
         self.assertTrue(game.state.lost)
         self.assertIn("A resposta era: TERMO", console.export_text())
+
+    def test_automatic_game_displays_metrics(self) -> None:
+        class WinningEngine:
+            _possible_answers = ["TERMO"]
+
+            def make_guess(self, state, vocabulary):
+                return "TERMO"
+
+        definition = cli.EngineDefinition("Teste", WinningEngine)
+        game = self.make_game()
+        console = make_console()
+
+        with (
+            patch("game.cli.TermoGame", return_value=game),
+            patch("game.cli.load_words", return_value=("TERMO", "AAAAA")),
+        ):
+            result = cli.play_automatic_game(console, definition)
+
+        output = console.export_text()
+        self.assertEqual(result.status, "Vitória")
+        self.assertEqual(result.attempts, 1)
+        self.assertIn("Tempo total", output)
+        self.assertIn("Tentativas: 1", output)
+
+    def test_automatic_game_pauses_between_attempts(self) -> None:
+        class TwoGuessEngine:
+            _possible_answers = ["AAAAA", "TERMO"]
+
+            def __init__(self):
+                self.guesses = iter(("AAAAA", "TERMO"))
+
+            def make_guess(self, state, vocabulary):
+                return next(self.guesses)
+
+        definition = cli.EngineDefinition("Teste", TwoGuessEngine)
+        game = self.make_game()
+        console = make_console()
+        pauses: list[str] = []
+
+        with (
+            patch("game.cli.TermoGame", return_value=game),
+            patch("game.cli.load_words", return_value=("TERMO", "AAAAA")),
+        ):
+            result = cli.play_automatic_game(
+                console,
+                definition,
+                input_function=lambda prompt: pauses.append(prompt) or "",
+            )
+
+        self.assertEqual(result.status, "Vitória")
+        self.assertEqual(result.attempts, 2)
+        self.assertEqual(pauses, [""])
+
+    def test_comparison_continues_when_engine_fails(self) -> None:
+        class WinningEngine:
+            _possible_answers = ["TERMO"]
+
+            def make_guess(self, state, vocabulary):
+                return "TERMO"
+
+        class FailingEngine:
+            _possible_answers = []
+
+            def make_guess(self, state, vocabulary):
+                raise ValueError("falha planejada")
+
+        definitions = (
+            cli.EngineDefinition("Vencedor", WinningEngine),
+            cli.EngineDefinition("Falha", FailingEngine),
+        )
+        games = (self.make_game(), self.make_game())
+        console = make_console()
+
+        with (
+            patch("game.cli.ENGINE_REGISTRY", definitions),
+            patch("game.cli.load_words", return_value=("TERMO", "AAAAA")),
+            patch(
+                "game.cli.TermoGame.create_shared_games",
+                return_value=("TERMO", games),
+            ),
+        ):
+            results = cli.compare_engines(console)
+
+        self.assertEqual(results[0].status, "Vitória")
+        self.assertEqual(results[1].status, "Erro")
+        self.assertIn("Palavra compartilhada: TERMO", console.export_text())
 
     def test_ctrl_c_exits_gracefully(self) -> None:
         console = make_console()
