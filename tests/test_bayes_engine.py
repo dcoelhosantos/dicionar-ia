@@ -26,7 +26,15 @@ class NaiveBayesEngineTestCase(unittest.TestCase):
     def setUp(self):
         self.engine = NaiveBayesEngine()
 
-    def test_first_guess_uses_highest_positional_probability(self):
+    def test_first_guess_prefers_rosea_when_available(self):
+        vocabulary = ("ABCDE", "ROSEA", "ABCDF", "ZBCDE")
+
+        guess = self.engine.make_guess(make_state(), vocabulary)
+
+        self.assertEqual(guess, "ROSEA")
+        self.assertEqual(self.engine._possible_answers, list(vocabulary))
+
+    def test_first_guess_uses_highest_probability_when_rosea_is_missing(self):
         vocabulary = ("ABCDE", "ABCDF", "ABCDG", "ZBCDE")
 
         guess = self.engine.make_guess(make_state(), vocabulary)
