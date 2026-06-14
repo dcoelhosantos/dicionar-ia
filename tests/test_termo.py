@@ -24,14 +24,28 @@ class LoadWordsTestCase(unittest.TestCase):
 
         self.assertEqual(words, ("TERMO", "ORGAO", "TERMO"))
 
+
 class TermoGameTestCase(unittest.TestCase):
     def setUp(self):
+        self.words = (
+            "TERMO",
+            "ORGAO",
+            "CASAS",
+            "PULAR",
+        )
         load_words_patcher = patch(
             "game.termo.load_words",
-            return_value=("TERMO",),
+            return_value=self.words,
         )
         self.load_words_mock = load_words_patcher.start()
         self.addCleanup(load_words_patcher.stop)
+
+        random_choice_patcher = patch(
+            "game.termo.random.choice",
+            return_value="TERMO",
+        )
+        random_choice_patcher.start()
+        self.addCleanup(random_choice_patcher.stop)
 
     def test_starts_with_empty_state_without_exposing_answer(self):
         game = TermoGame()
@@ -76,6 +90,15 @@ class TermoGameTestCase(unittest.TestCase):
         self.assertFalse(game.state.lost)
         self.assertTrue(game.state.over)
 
+    def test_rejects_guess_outside_dataset_without_consuming_attempt(self):
+        game = TermoGame()
+
+        with self.assertRaisesRegex(ValueError, "não pertence ao dataset"):
+            game.make_guess("ABCDE")
+
+        self.assertEqual(game.state.history, ())
+        self.assertEqual(game.state.attempts_remaining, 6)
+
     def test_game_ends_after_max_attempts(self):
         game = TermoGame()
         game._max_attempts = 2
@@ -96,6 +119,18 @@ class TermoGameTestCase(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "já foi encerrada"):
             game.make_guess("TERMO")
 
+    def test_hides_answer_during_game(self):
+        game = TermoGame()
+
+        with self.assertRaisesRegex(RuntimeError, "após o fim"):
+            _ = game.answer
+
+    def test_reveals_answer_after_game_ends(self):
+        game = TermoGame()
+        game.make_guess("TERMO")
+
+        self.assertEqual(game.answer, "TERMO")
+
     @patch("game.termo.random.choice", return_value="TERMO")
     def test_creates_game_with_random_answer(self, random_choice_mock):
         game = TermoGame()
@@ -103,8 +138,21 @@ class TermoGameTestCase(unittest.TestCase):
         result = game.make_guess("TERMO")
 
         self.load_words_mock.assert_called_once_with()
-        random_choice_mock.assert_called_once_with(("TERMO",))
+        random_choice_mock.assert_called_once_with(self.words)
         self.assertTrue(all(item == C for item in result.feedback))
+
+    def test_creates_independent_games_with_shared_answer(self):
+        answer, games = TermoGame.create_shared_games(2)
+
+        games[0].make_guess("CASAS")
+
+        self.assertEqual(answer, "TERMO")
+        self.assertEqual(len(games[0].state.history), 1)
+        self.assertEqual(games[1].state.history, ())
+
+    def test_rejects_invalid_shared_game_count(self):
+        with self.assertRaisesRegex(ValueError, "maior que zero"):
+            TermoGame.create_shared_games(0)
 
 
 if __name__ == "__main__":
