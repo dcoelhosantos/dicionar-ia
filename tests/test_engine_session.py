@@ -34,9 +34,9 @@ class EngineSessionTestCase(unittest.TestCase):
     def test_registry_identifies_available_engines(self):
         availability = {item.name: item.available for item in ENGINE_REGISTRY}
 
+        self.assertTrue(availability["Naive Bayes"])
         self.assertTrue(availability["Minimax"])
         self.assertTrue(availability["DPLL Solver"])
-        self.assertFalse(availability["Naive Bayes"])
         self.assertFalse(availability["Model Checking"])
 
     def test_suggestions_include_recommendation_and_unique_candidates(self):
