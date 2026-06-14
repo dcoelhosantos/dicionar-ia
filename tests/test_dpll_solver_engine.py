@@ -1,60 +1,67 @@
 import unittest
+from dataclasses import dataclass
 
 from engines.dpll_solver.dpll_solver_engine import LogicEngine
 from game.feedback import LetterFeedback
+from game.termo import GameState
 
 C = LetterFeedback.CORRECT
 P = LetterFeedback.PRESENT
 W = LetterFeedback.WRONG
 
+@dataclass
+class MockResult:
+    guess: str
+    feedback: tuple
 
 class LogicEngineTestCase(unittest.TestCase):
     def setUp(self):
         self.engine = LogicEngine()
 
     def test_initially_all_words_are_possible(self):
-        # Sem nenhum feedback, qualquer palavra do dicionário deve ser aceita
         self.assertTrue(self.engine.is_word_possible("TERMO"))
         self.assertTrue(self.engine.is_word_possible("SAGAZ"))
 
     def test_correct_feedback_filters_words(self):
-        # Chute: "PORTA". Feedback diz que APENAS o 'T' (pos 3) está correto.
         self.engine.process_feedback("PORTA", (W, W, W, C, W))
-
-        # "LENTE" tem 'T' na pos 3 e não usa P, O, R ou A -> Deve ser possível
         self.assertTrue(self.engine.is_word_possible("LENTE"))
-        # "TERMO" tem 'M' na pos 3 -> Deve ser impossível
         self.assertFalse(self.engine.is_word_possible("TERMO"))
 
     def test_wrong_feedback_eliminates_letter_completely(self):
-        # Chute: "SAGAZ". Todas as letras não existem na palavra secreta.
         self.engine.process_feedback("SAGAZ", (W, W, W, W, W))
-
-        # "TERMO" não tem S, A, G ou Z -> Deve ser possível
         self.assertTrue(self.engine.is_word_possible("TERMO"))
-        # "CASAS" tem S e A -> Deve ser impossível
         self.assertFalse(self.engine.is_word_possible("CASAS"))
 
     def test_present_feedback_rules(self):
-        # Chute: "TERMO". O 'T' existe, mas NÃO na pos 0. E, R, M, O não existem.
         self.engine.process_feedback("TERMO", (P, W, W, W, W))
-
-        # "BASTA" tem T na pos 3 e não usa E, R, M ou O -> Possível
         self.assertTrue(self.engine.is_word_possible("BASTA"))
-        # "TOLOS" tem T na pos 0 (onde recebemos amarelo) -> Impossível
         self.assertFalse(self.engine.is_word_possible("TOLOS"))
 
     def test_double_letter_edge_case(self):
-        # Resposta seria "PORTA", o chute foi "ARARA".
-        # O primeiro 'A' fica cinza, o R do meio amarelo, e o último 'A' fica verde.
         self.engine.process_feedback("ARARA", (W, P, W, W, C))
-
-        # "PORTA" atende a todos os requisitos acima!
         self.assertTrue(self.engine.is_word_possible("PORTA"))
-        # "AMORA" tem 'A' na pos 0 (onde deu cinza), então tem que ser barrada.
         self.assertFalse(self.engine.is_word_possible("AMORA"))
-        # "ARARA" original tem que ser barrada porque as posições 0, 1 e 2 deram erro.
         self.assertFalse(self.engine.is_word_possible("ARARA"))
+
+    def test_make_guess_initial_state_returns_rosea(self):
+        state = GameState(history=(), attempts_remaining=6, won=False, lost=False, over=False)
+        vocab = ("TERMO", "ROSEA", "SAGAZ")
+        
+        guess = self.engine.make_guess(state, vocab)
+        self.assertEqual(guess, "ROSEA")
+        self.assertEqual(self.engine._possible_answers, ["TERMO", "ROSEA", "SAGAZ"])
+
+    def test_make_guess_filters_and_returns_valid_word(self):
+        initial_state = GameState(history=(), attempts_remaining=6, won=False, lost=False, over=False)
+        vocab = ("PORTA", "VESTE", "TERMO")
+        self.engine.make_guess(initial_state, vocab)
+        
+        history = (MockResult(guess="PORTA", feedback=(W, W, W, C, W)),)
+        state = GameState(history=history, attempts_remaining=5, won=False, lost=False, over=False)
+        
+        guess = self.engine.make_guess(state, vocab)
+        self.assertEqual(guess, "VESTE")
+        self.assertEqual(self.engine._possible_answers, ["VESTE"])
 
 
 if __name__ == "__main__":
