@@ -36,7 +36,6 @@ class EngineDefinition:
 
 
 ENGINE_REGISTRY = (
-    EngineDefinition("CSP", None),
     EngineDefinition("Naive Bayes", None),
     EngineDefinition("Minimax", MinimaxEngine),
     EngineDefinition("Model Checking", None),

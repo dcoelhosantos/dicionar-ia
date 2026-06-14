@@ -36,7 +36,6 @@ class EngineSessionTestCase(unittest.TestCase):
 
         self.assertTrue(availability["Minimax"])
         self.assertTrue(availability["DPLL Solver"])
-        self.assertFalse(availability["CSP"])
         self.assertFalse(availability["Naive Bayes"])
         self.assertFalse(availability["Model Checking"])
 
