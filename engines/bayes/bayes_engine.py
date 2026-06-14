@@ -1,4 +1,5 @@
 from collections import Counter
+from collections.abc import Sequence
 import math
 
 from game.feedback import WORD_LENGTH, evaluate_guess
@@ -18,11 +19,11 @@ class NaiveBayesEngine:
 
     def _position_counts(
         self,
-        vocabulary: tuple[str, ...],
+        words: Sequence[str],
     ) -> tuple[Counter[str], ...]:
         counts = tuple(Counter() for _ in range(WORD_LENGTH))
 
-        for word in vocabulary:
+        for word in words:
             for index, letter in enumerate(word):
                 counts[index][letter] += 1
 
@@ -55,7 +56,6 @@ class NaiveBayesEngine:
             self._possible_answers = list(vocabulary)
             return OPENING_GUESS
 
-        position_counts = self._position_counts(vocabulary)
         candidates = [
             word for word in vocabulary if self._matches_history(word, state)
         ]
@@ -66,12 +66,13 @@ class NaiveBayesEngine:
                 "Nenhum candidato restante no vocabulário para este histórico."
             )
 
+        position_counts = self._position_counts(candidates)
         self._possible_answers = sorted(
             candidates,
             key=lambda word: self._log_probability(
                 word,
                 position_counts,
-                len(vocabulary),
+                len(candidates),
             ),
             reverse=True,
         )
