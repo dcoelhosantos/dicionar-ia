@@ -18,6 +18,7 @@ from game.cli.game_modes import (
 )
 
 InputFunction = Callable[[str], str]
+EvaluationFunction = Callable[[], None]
 
 
 def run_engine_mode_menu(
@@ -71,6 +72,7 @@ def run_engine_menu(console: Console, input_function: InputFunction) -> None:
 def run_cli(
     console: Console | None = None,
     input_function: InputFunction = input,
+    evaluation_function: EvaluationFunction | None = None,
 ) -> None:
     console = console or Console()
 
@@ -87,6 +89,17 @@ def run_cli(
                 compare_engines(console)
                 pause(console, input_function)
             elif choice == "4":
+                if evaluation_function is None:
+                    console.print(
+                        Panel(
+                            "A avaliação dos motores não está disponível.",
+                            border_style="yellow",
+                        )
+                    )
+                else:
+                    evaluation_function()
+                pause(console, input_function)
+            elif choice == "5":
                 console.print("Jogo finalizado!")
                 return
             else:

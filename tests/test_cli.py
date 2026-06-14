@@ -1,6 +1,6 @@
 import io
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from rich.console import Console
 
@@ -127,7 +127,7 @@ class TermoCliTests(unittest.TestCase):
 
     def test_menu_inicia_jogo_e_sai(self) -> None:
         console = make_console()
-        inputs = iter(["4"])
+        inputs = iter(["5"])
 
         with patch("game.cli.cli.play_manual_game") as play_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
@@ -137,7 +137,7 @@ class TermoCliTests(unittest.TestCase):
 
     def test_opcao_invalida_solicita_nova_escolha(self) -> None:
         console = make_console()
-        inputs = iter(["9", "4"])
+        inputs = iter(["9", "5"])
 
         with patch("game.cli.cli.play_manual_game") as play_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
@@ -147,7 +147,7 @@ class TermoCliTests(unittest.TestCase):
 
     def test_engine_menu_blocks_unavailable_engine(self) -> None:
         console = make_console()
-        inputs = iter(["2", "1", "5", "4"])
+        inputs = iter(["2", "1", "5", "5"])
 
         cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
@@ -158,7 +158,7 @@ class TermoCliTests(unittest.TestCase):
 
     def test_engine_menu_runs_available_engine_mode(self) -> None:
         console = make_console()
-        inputs = iter(["2", "4", "1", "3", "5", "4"])
+        inputs = iter(["2", "4", "1", "3", "5", "5"])
 
         with patch("game.cli.cli.play_assisted_game") as assisted_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
@@ -167,7 +167,7 @@ class TermoCliTests(unittest.TestCase):
 
     def test_compare_engines_runs_from_main_menu(self) -> None:
         console = make_console()
-        inputs = iter(["3", "4"])
+        inputs = iter(["3", "5"])
 
         with (
             patch("game.cli.cli.compare_engines") as compare_mock,
@@ -176,6 +176,33 @@ class TermoCliTests(unittest.TestCase):
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         compare_mock.assert_called_once_with(console)
+
+    def test_evaluation_runs_from_main_menu(self) -> None:
+        console = make_console()
+        inputs = iter(["4", "5"])
+        evaluation_mock = Mock()
+
+        with patch("game.cli.cli.pause") as pause_mock:
+            cli.run_cli(
+                console=console,
+                input_function=lambda _: next(inputs),
+                evaluation_function=evaluation_mock,
+            )
+
+        evaluation_mock.assert_called_once_with()
+        pause_mock.assert_called_once()
+
+    def test_evaluation_without_callback_shows_unavailable_message(self) -> None:
+        console = make_console()
+        inputs = iter(["4", "5"])
+
+        with patch("game.cli.cli.pause"):
+            cli.run_cli(console=console, input_function=lambda _: next(inputs))
+
+        self.assertIn(
+            "avaliação dos motores não está disponível",
+            console.export_text(),
+        )
 
     def test_invalid_guess_does_not_consume_turn(self) -> None:
         game = self.make_game()
