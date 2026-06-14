@@ -64,6 +64,18 @@ class NaiveBayesEngineTestCase(unittest.TestCase):
         self.assertEqual(guess, "PUDIM")
         self.assertEqual(self.engine._possible_answers, ["PUDIM"])
 
+    def test_ranks_candidates_using_only_remaining_words(self):
+        vocabulary = ("BBBBA", "AAAAA", "ZAAAA", "AAAAZ")
+        result = GuessResult("ZZZZZ", (W, W, W, W, W))
+
+        guess = self.engine.make_guess(
+            make_state((result,), attempts_remaining=5),
+            vocabulary,
+        )
+
+        self.assertEqual(guess, "BBBBA")
+        self.assertEqual(self.engine._possible_answers, ["BBBBA", "AAAAA"])
+
     def test_filters_repeated_letters_using_exact_feedback(self):
         vocabulary = ("CARTA", "CACAU", "CASCA", "CARRO")
         result = GuessResult("CACAU", evaluate_guess("CARTA", "CACAU"))
