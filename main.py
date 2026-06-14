@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from engines.bayes.bayes_engine import NaiveBayesEngine
 from engines.dpll_solver.dpll_solver_engine import LogicEngine
 from engines.minimax.minimax_engine import MinimaxEngine
 from game.cli import run_cli
@@ -16,7 +17,7 @@ def run_evaluation() -> None:
 
     print(f"Dataset carregado com sucesso: {len(vocabulary)} palavras.")
 
-    for engine in (MinimaxEngine(), LogicEngine()):
+    for engine in (NaiveBayesEngine(), MinimaxEngine(), LogicEngine()):
         name = engine.__class__.__name__
         print(f"\nAvaliando motor [{name}] em {num_games} partidas...\n")
 
