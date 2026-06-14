@@ -1,6 +1,6 @@
 from sympy import Not
 
-from engines.dpll_solver.cnf_utils import get_symbol, negate_literal
+from engines.logic.dpll.cnf_utils import get_symbol, negate_literal
 
 
 def dpll(clauses, assignment=None):
