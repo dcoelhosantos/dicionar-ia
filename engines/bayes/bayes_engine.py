@@ -5,6 +5,7 @@ from game.feedback import WORD_LENGTH, evaluate_guess
 from game.termo import GameState
 
 ALPHABET_SIZE = 26
+OPENING_GUESS = "ROSEA"
 
 
 class NaiveBayesEngine:
@@ -49,6 +50,10 @@ class NaiveBayesEngine:
     def make_guess(self, state: GameState, vocabulary: tuple[str, ...]) -> str:
         if not vocabulary:
             raise ValueError("vocabulário não deve estar vazio")
+
+        if not state.history and OPENING_GUESS in vocabulary:
+            self._possible_answers = list(vocabulary)
+            return OPENING_GUESS
 
         position_counts = self._position_counts(vocabulary)
         candidates = [
