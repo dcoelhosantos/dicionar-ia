@@ -1,6 +1,7 @@
 from pathlib import Path
 
-from engines.dpll_solver.dpll_solver_engine import LogicEngine
+from engines.logic.dpll.dpll_engine import DpllEngine
+from engines.logic.model_checking.model_checking_engine import ModelCheckingEngine
 from engines.minimax.minimax_engine import MinimaxEngine
 from game.cli import run_cli
 from game.termo import load_words
@@ -16,7 +17,9 @@ def run_evaluation() -> None:
 
     print(f"Dataset carregado com sucesso: {len(vocabulary)} palavras.")
 
-    for engine in (MinimaxEngine(), LogicEngine()):
+    engines_to_evaluate = (MinimaxEngine(), DpllEngine())
+
+    for engine in engines_to_evaluate:
         name = engine.__class__.__name__
         print(f"\nAvaliando motor [{name}] em {num_games} partidas...\n")
 
