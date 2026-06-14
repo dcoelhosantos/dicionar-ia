@@ -49,11 +49,33 @@ class TermoGame:
     def __init__(self) -> None:
         words = load_words()
 
-        self._answer = random.choice(words)
+        self._initialize(words, random.choice(words))
+
+    def _initialize(self, words: tuple[str, ...], answer: str) -> None:
+        self._answer = answer
         self._valid_words = set(words)
         self._max_attempts = MAX_ATTEMPTS
         self._history = []
         self._won = False
+
+    @classmethod
+    def create_shared_games(
+        cls,
+        count: int,
+    ) -> tuple[str, tuple["TermoGame", ...]]:
+        if count < 1:
+            raise ValueError("A quantidade de partidas deve ser maior que zero.")
+
+        words = load_words()
+        answer = random.choice(words)
+        games: list[TermoGame] = []
+
+        for _ in range(count):
+            game = cls.__new__(cls)
+            game._initialize(words, answer)
+            games.append(game)
+
+        return answer, tuple(games)
 
     @property
     def state(self) -> GameState:
