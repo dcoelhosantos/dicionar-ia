@@ -4,7 +4,8 @@ from unittest.mock import patch
 
 from rich.console import Console
 
-from game import cli
+from game.cli import cli, cli_views, game_modes
+from game.cli.engine_session import EngineDefinition
 from game.feedback import LetterFeedback
 from game.termo import GameState, GuessResult, TermoGame
 
@@ -34,7 +35,7 @@ class TermoCliTests(unittest.TestCase):
             return TermoGame()
 
     def test_build_tile_applies_feedback_style(self) -> None:
-        tile = cli.build_tile("A", LetterFeedback.CORRECT)
+        tile = cli_views.build_tile("A", LetterFeedback.CORRECT)
 
         self.assertEqual(tile.plain, " A ")
         self.assertIsNotNone(tile.style)
@@ -60,7 +61,7 @@ class TermoCliTests(unittest.TestCase):
             over=False,
         )
 
-        output = render_text(cli.build_board(state))
+        output = render_text(cli_views.build_board(state))
         self.assertGreaterEqual(len(output.splitlines()), 6)
 
     def test_collect_wrong_letters_keeps_unique_order(self) -> None:
@@ -94,7 +95,7 @@ class TermoCliTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            cli.collect_wrong_letters(state),
+            cli_views.collect_wrong_letters(state),
             ("A", "B", "C", "D", "E", "F", "G", "H", "I"),
         )
 
@@ -118,7 +119,7 @@ class TermoCliTests(unittest.TestCase):
             over=False,
         )
 
-        output = render_text(cli.build_wrong_letters_panel(state))
+        output = render_text(cli_views.build_wrong_letters_panel(state))
         self.assertIn("Letras usadas", output)
         self.assertIn("Letras ausentes", output)
         self.assertIn("A", output)
@@ -128,7 +129,7 @@ class TermoCliTests(unittest.TestCase):
         console = make_console()
         inputs = iter(["4"])
 
-        with patch("game.cli.play_manual_game") as play_mock:
+        with patch("game.cli.cli.play_manual_game") as play_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         play_mock.assert_not_called()
@@ -138,7 +139,7 @@ class TermoCliTests(unittest.TestCase):
         console = make_console()
         inputs = iter(["9", "4"])
 
-        with patch("game.cli.play_manual_game") as play_mock:
+        with patch("game.cli.cli.play_manual_game") as play_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         play_mock.assert_not_called()
@@ -159,7 +160,7 @@ class TermoCliTests(unittest.TestCase):
         console = make_console()
         inputs = iter(["2", "5", "1", "3", "6", "4"])
 
-        with patch("game.cli.play_assisted_game") as assisted_mock:
+        with patch("game.cli.cli.play_assisted_game") as assisted_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         assisted_mock.assert_called_once()
@@ -169,8 +170,8 @@ class TermoCliTests(unittest.TestCase):
         inputs = iter(["3", "4"])
 
         with (
-            patch("game.cli.compare_engines") as compare_mock,
-            patch("game.cli.pause"),
+            patch("game.cli.cli.compare_engines") as compare_mock,
+            patch("game.cli.cli.pause"),
         ):
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
@@ -181,8 +182,8 @@ class TermoCliTests(unittest.TestCase):
         console = make_console()
         inputs = iter(["ABC", "TERMO", ""])
 
-        with patch("game.cli.TermoGame", return_value=game):
-            result = cli.play_manual_game(
+        with patch("game.cli.game_modes.TermoGame", return_value=game):
+            result = game_modes.play_manual_game(
                 console=console,
                 input_function=lambda _: next(inputs),
             )
@@ -196,8 +197,8 @@ class TermoCliTests(unittest.TestCase):
         console = make_console()
         inputs = iter(["ABCDE", "TERMO", ""])
 
-        with patch("game.cli.TermoGame", return_value=game):
-            result = cli.play_manual_game(
+        with patch("game.cli.game_modes.TermoGame", return_value=game):
+            result = game_modes.play_manual_game(
                 console=console,
                 input_function=lambda _: next(inputs),
             )
@@ -211,8 +212,8 @@ class TermoCliTests(unittest.TestCase):
         console = make_console()
         inputs = iter(["AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA", ""])
 
-        with patch("game.cli.TermoGame", return_value=game):
-            result = cli.play_manual_game(
+        with patch("game.cli.game_modes.TermoGame", return_value=game):
+            result = game_modes.play_manual_game(
                 console=console,
                 input_function=lambda _: next(inputs),
             )
@@ -229,15 +230,18 @@ class TermoCliTests(unittest.TestCase):
             def make_guess(self, state, vocabulary):
                 return "TERMO"
 
-        definition = cli.EngineDefinition("Teste", WinningEngine)
+        definition = EngineDefinition("Teste", WinningEngine)
         game = self.make_game()
         console = make_console()
 
         with (
-            patch("game.cli.TermoGame", return_value=game),
-            patch("game.cli.load_words", return_value=("TERMO", "AAAAA")),
+            patch("game.cli.game_modes.TermoGame", return_value=game),
+            patch(
+                "game.cli.game_modes.load_words",
+                return_value=("TERMO", "AAAAA"),
+            ),
         ):
-            result = cli.play_automatic_game(console, definition)
+            result = game_modes.play_automatic_game(console, definition)
 
         output = console.export_text()
         self.assertEqual(result.status, "Vitória")
@@ -255,16 +259,19 @@ class TermoCliTests(unittest.TestCase):
             def make_guess(self, state, vocabulary):
                 return next(self.guesses)
 
-        definition = cli.EngineDefinition("Teste", TwoGuessEngine)
+        definition = EngineDefinition("Teste", TwoGuessEngine)
         game = self.make_game()
         console = make_console()
         pauses: list[str] = []
 
         with (
-            patch("game.cli.TermoGame", return_value=game),
-            patch("game.cli.load_words", return_value=("TERMO", "AAAAA")),
+            patch("game.cli.game_modes.TermoGame", return_value=game),
+            patch(
+                "game.cli.game_modes.load_words",
+                return_value=("TERMO", "AAAAA"),
+            ),
         ):
-            result = cli.play_automatic_game(
+            result = game_modes.play_automatic_game(
                 console,
                 definition,
                 input_function=lambda prompt: pauses.append(prompt) or "",
@@ -288,21 +295,24 @@ class TermoCliTests(unittest.TestCase):
                 raise ValueError("falha planejada")
 
         definitions = (
-            cli.EngineDefinition("Vencedor", WinningEngine),
-            cli.EngineDefinition("Falha", FailingEngine),
+            EngineDefinition("Vencedor", WinningEngine),
+            EngineDefinition("Falha", FailingEngine),
         )
         games = (self.make_game(), self.make_game())
         console = make_console()
 
         with (
-            patch("game.cli.ENGINE_REGISTRY", definitions),
-            patch("game.cli.load_words", return_value=("TERMO", "AAAAA")),
+            patch("game.cli.game_modes.ENGINE_REGISTRY", definitions),
             patch(
-                "game.cli.TermoGame.create_shared_games",
+                "game.cli.game_modes.load_words",
+                return_value=("TERMO", "AAAAA"),
+            ),
+            patch(
+                "game.cli.game_modes.TermoGame.create_shared_games",
                 return_value=("TERMO", games),
             ),
         ):
-            results = cli.compare_engines(console)
+            results = game_modes.compare_engines(console)
 
         self.assertEqual(results[0].status, "Vitória")
         self.assertEqual(results[1].status, "Erro")
@@ -311,7 +321,7 @@ class TermoCliTests(unittest.TestCase):
     def test_ctrl_c_exits_gracefully(self) -> None:
         console = make_console()
 
-        with patch("game.cli.show_main_menu"):
+        with patch("game.cli.cli.show_main_menu"):
             result = cli.run_cli(
                 console=console,
                 input_function=lambda _: (_ for _ in ()).throw(KeyboardInterrupt),

@@ -1,6 +1,6 @@
 import unittest
 
-from game.engine_session import ENGINE_REGISTRY, EngineSession
+from game.cli.engine_session import ENGINE_REGISTRY, EngineSession
 from game.termo import GameState
 
 
