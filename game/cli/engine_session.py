@@ -2,6 +2,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Protocol
 
+from engines.bayes.bayes_engine import NaiveBayesEngine
 from engines.dpll_solver.dpll_solver_engine import LogicEngine
 from engines.minimax.minimax_engine import MinimaxEngine
 from game.termo import GameState
@@ -36,7 +37,7 @@ class EngineDefinition:
 
 
 ENGINE_REGISTRY = (
-    EngineDefinition("Naive Bayes", None),
+    EngineDefinition("Naive Bayes", NaiveBayesEngine),
     EngineDefinition("Minimax", MinimaxEngine),
     EngineDefinition("Model Checking", None),
     EngineDefinition("DPLL Solver", LogicEngine),
