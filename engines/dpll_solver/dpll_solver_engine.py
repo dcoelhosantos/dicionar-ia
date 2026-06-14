@@ -3,6 +3,7 @@ from sympy import Not, Or, symbols
 from engines.dpll_solver.cnf_utils import to_cnf_clauses
 from engines.dpll_solver.dpll_algorithm import dpll
 from game.feedback import LetterFeedback
+from game.termo import GameState
 
 
 class LogicEngine:
@@ -13,6 +14,7 @@ class LogicEngine:
         self.position_symbols = {}
         self.knowledge_base = []
         self._cached_cnf = None
+        self._possible_answers = []
 
         # Inicializa a matriz de símbolos lógicos (Pos0_A, Pos0_B, etc.)
         for i in range(5):
@@ -69,3 +71,31 @@ class LogicEngine:
         result = dpll(test_clauses)
 
         return result is not False
+    
+    def make_guess(self, state: GameState, vocabulary: tuple[str, ...]) -> str:
+        """Calcula o próximo palpite com base no estado do jogo."""
+        
+        if not state.history:
+            self.knowledge_base = []
+            self._cached_cnf = None
+            self._possible_answers = list(vocabulary)
+            return "ROSEA" 
+
+        last_play = state.history[-1]
+        self.process_feedback(last_play.guess, last_play.feedback)
+
+        survivors = []
+        for word in self._possible_answers:
+            if self.is_word_possible(word):
+                survivors.append(word)
+
+        self._possible_answers = survivors
+
+        if len(self._possible_answers) == 1:
+            return self._possible_answers[0]
+
+        if self._possible_answers:
+            return self._possible_answers[0]
+
+        # Fallback de segurança 
+        return "TERMO"

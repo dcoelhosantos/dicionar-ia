@@ -1,7 +1,10 @@
 from pathlib import Path
+
+#from engines.dpll_solver.dpll_solver_engine import LogicEngine
+from engines.minimax.minimax_engine import MinimaxEngine
 from game.termo import load_words
 from metrics.evaluator import Evaluator
-from engines.minimax_engine import MinimaxEngine
+
 
 def main() -> None:
     print("Iniciando...\n")
@@ -11,6 +14,7 @@ def main() -> None:
 
     print(f"Vocabulário carregado com sucesso: {len(vocabulary)} palavras.")
 
+    #engine = LogicEngine()
     engine = MinimaxEngine()
     num_games = 50
     evaluator = Evaluator(engine=engine, vocabulary=vocabulary, num_games=num_games)
