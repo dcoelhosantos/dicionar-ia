@@ -2,6 +2,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Protocol
 
+from engines.bayes.bayes_engine import NaiveBayesEngine
 from engines.logic.dpll.dpll_engine import DpllEngine
 from engines.logic.model_checking.model_checking_engine import ModelCheckingEngine
 from engines.minimax.minimax_engine import MinimaxEngine
@@ -37,10 +38,10 @@ class EngineDefinition:
 
 
 ENGINE_REGISTRY = (
-    EngineDefinition("Naive Bayes", None),
+    EngineDefinition("Naive Bayes", NaiveBayesEngine),
     EngineDefinition("Minimax", MinimaxEngine),
-    EngineDefinition("Model Checking", ModelCheckingEngine), 
-    EngineDefinition("DPLL Solver", DpllEngine),            
+    EngineDefinition("Model Checking", ModelCheckingEngine),
+    EngineDefinition("DPLL Solver", DpllEngine),
 )
 
 

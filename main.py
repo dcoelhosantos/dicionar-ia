@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from engines.bayes.bayes_engine import NaiveBayesEngine
 from engines.logic.dpll.dpll_engine import DpllEngine
 from engines.logic.model_checking.model_checking_engine import ModelCheckingEngine
 from engines.minimax.minimax_engine import MinimaxEngine
@@ -17,7 +18,7 @@ def run_evaluation() -> None:
 
     print(f"Dataset carregado com sucesso: {len(vocabulary)} palavras.")
 
-    engines_to_evaluate = (MinimaxEngine(), DpllEngine())
+    engines_to_evaluate = (NaiveBayesEngine(), MinimaxEngine(), DpllEngine())
 
     for engine in engines_to_evaluate:
         name = engine.__class__.__name__

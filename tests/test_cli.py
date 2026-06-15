@@ -145,20 +145,22 @@ class TermoCliTests(unittest.TestCase):
         play_mock.assert_not_called()
         self.assertIn("Opção inválida", console.export_text())
 
-    def test_engine_menu_blocks_unavailable_engine(self) -> None:
+    def test_engine_menu_displays_available_engines(self) -> None:
         console = make_console()
-        inputs = iter(["2", "1", "5", "5"])
+        inputs = iter(["2", "3", "3", "5", "5"])
 
         cli.run_cli(console=console, input_function=lambda _: next(inputs))
 
         output = console.export_text()
         self.assertIn("Escolha um motor", output)
-        self.assertIn("Naive Bayes (indisponível)", output)
-        self.assertIn("ainda não está disponível", output)
+        self.assertIn("Naive Bayes", output)
+        self.assertNotIn("Naive Bayes (indisponível)", output)
+        self.assertIn("Model Checking", output)
+        self.assertNotIn("Model Checking (indisponível)", output)
 
     def test_engine_menu_runs_available_engine_mode(self) -> None:
         console = make_console()
-        inputs = iter(["2", "4", "1", "3", "5", "5"])
+        inputs = iter(["2", "1", "1", "3", "5", "5"])
 
         with patch("game.cli.cli.play_assisted_game") as assisted_mock:
             cli.run_cli(console=console, input_function=lambda _: next(inputs))
