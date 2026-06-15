@@ -53,7 +53,7 @@ python main.py
 
 ---
 
-### Opções do Menu na CLI
+## Opções do Menu na CLI
 
 Ao executar o projeto, você terá acesso ao nosso painel interativo:
 
@@ -64,7 +64,7 @@ Ao executar o projeto, você terá acesso ao nosso painel interativo:
 
 ---
 
-### Arquitetura do Projeto
+## Arquitetura do Projeto
 
 * `game/`: Lógica central do Termo, validação de regras, processamento de feedback e UI (CLI).
 * `engines/`: Onde habitam os motores, isolados por domínio (`logic`, `minimax`, `bayes`). Motores lógicos compartilham código através da `BaseLogicEngine`.
