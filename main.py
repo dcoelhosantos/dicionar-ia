@@ -12,7 +12,7 @@ from metrics.evaluator import Evaluator
 def run_evaluation() -> None:
     print("Iniciando avaliação dos motores...\n")
 
-    dataset_path = Path(__file__).resolve().parent / "dataset" / "words.txt"
+    dataset_path = Path(__file__).resolve().parent / "dataset" / "words_termo.txt"
     vocabulary = load_words(dataset_path)
     num_games = 50
 

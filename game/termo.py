@@ -10,7 +10,7 @@ from game.feedback import (
 )
 
 DEFAULT_WORDS_PATH = (
-    Path(__file__).resolve().parent.parent / "dataset" / "words.txt"
+    Path(__file__).resolve().parent.parent / "dataset" / "words_termo.txt"
 )
 
 MAX_ATTEMPTS = 6
